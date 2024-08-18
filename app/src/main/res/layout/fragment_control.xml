@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="@dimen/_16sdp"
+    android:paddingVertical="@dimen/_12sdp"
+    android:orientation="vertical"
+    android:background="@color/background_F2F2F2"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragment.ControlFragment" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="List Device"
+        android:textStyle="bold"
+        android:fontFamily="@font/NotoSans"
+        android:textSize="@dimen/_32ssp"
+        android:layout_gravity="center"
+        android:textColor="@color/dark_464646"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/loLight"
+            android:layout_width="match_parent"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:paddingVertical="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/bg_radius_12" >
+
+            <ImageView
+                android:id="@+id/imgLight"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:src="@drawable/ic_launcher_background"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Smart Light"
+                android:textStyle="bold"
+                android:fontFamily="@font/NotoSans"
+                android:textSize="@dimen/_18ssp"
+                android:layout_gravity="center"
+                android:textColor="@color/dark_464646"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:layout_constraintTop_toTopOf="@id/imgLight"
+                app:layout_constraintStart_toEndOf="@id/imgLight"
+                app:layout_constraintEnd_toStartOf="@id/btnLight"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/btnLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loFan"
+        android:layout_width="match_parent"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:paddingVertical="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:background="@drawable/bg_radius_12" >
+
+        <ImageView
+            android:id="@+id/imgFan"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Smart Fan"
+            android:textStyle="bold"
+            android:fontFamily="@font/NotoSans"
+            android:textSize="@dimen/_18ssp"
+            android:layout_gravity="center"
+            android:textColor="@color/dark_464646"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintTop_toTopOf="@id/imgFan"
+            app:layout_constraintStart_toEndOf="@id/imgFan"
+            app:layout_constraintEnd_toStartOf="@id/btnFan"/>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/btnFan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/loAC"
+        android:layout_width="match_parent"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:paddingVertical="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:background="@drawable/bg_radius_12" >
+
+        <ImageView
+            android:id="@+id/imgAC"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/ic_launcher_background"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Smart Air Condition"
+            android:textStyle="bold"
+            android:fontFamily="@font/NotoSans"
+            android:textSize="@dimen/_18ssp"
+            android:layout_gravity="center"
+            android:textColor="@color/dark_464646"
+            android:layout_marginStart="@dimen/_10sdp"
+            app:layout_constraintTop_toTopOf="@id/imgAC"
+            app:layout_constraintStart_toEndOf="@id/imgAC"
+            app:layout_constraintEnd_toStartOf="@id/btnAC"/>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/btnAC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
