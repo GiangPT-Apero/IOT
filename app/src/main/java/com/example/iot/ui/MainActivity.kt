@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.iot.R
+import com.example.iot.model.BrightSensorResponse
+import com.example.iot.model.HumSensorResponse
+import com.example.iot.model.TempSensorResponse
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,4 +21,5 @@ class MainActivity : AppCompatActivity() {
             insets
         }
     }
+
 }
