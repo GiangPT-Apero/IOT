@@ -11,11 +11,9 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment_chart
     }
 
     override fun initView() {
-        TODO("Not yet implemented")
     }
 
     override fun observeViewModel() {
-        TODO("Not yet implemented")
     }
 
 }

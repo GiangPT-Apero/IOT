@@ -11,11 +11,9 @@ class BrightnessFragment : BaseFragment<FragmentBrightnessBinding>(R.layout.frag
     }
 
     override fun initView() {
-        TODO("Not yet implemented")
     }
 
     override fun observeViewModel() {
-        TODO("Not yet implemented")
     }
 
 }

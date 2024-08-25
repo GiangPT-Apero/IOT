@@ -11,11 +11,9 @@ class HumidityFragment : BaseFragment<FragmentHumidityBinding>(R.layout.fragment
     }
 
     override fun initView() {
-        TODO("Not yet implemented")
     }
 
     override fun observeViewModel() {
-        TODO("Not yet implemented")
     }
 
 }

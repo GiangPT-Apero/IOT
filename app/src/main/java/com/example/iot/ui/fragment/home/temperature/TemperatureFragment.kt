@@ -11,11 +11,9 @@ class TemperatureFragment : BaseFragment<FragmentTemperatureBinding>(R.layout.fr
     }
 
     override fun initView() {
-        TODO("Not yet implemented")
     }
 
     override fun observeViewModel() {
-        TODO("Not yet implemented")
     }
 
 }

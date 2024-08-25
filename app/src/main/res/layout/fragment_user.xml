@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
-        android:fontFamily="@font/NotoSans"
+        android:fontFamily="@font/noto_sans"
         android:textColor="@color/dark_464646"
         android:text="Ten" />
 
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
-        android:fontFamily="@font/NotoSans"
+        android:fontFamily="@font/noto_sans"
         android:textColor="@color/dark_464646"
         android:text="Ma sv" />
 
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
-        android:fontFamily="@font/NotoSans"
+        android:fontFamily="@font/noto_sans"
         android:textColor="@color/dark_464646"
         android:text="Ten" />
 
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
-        android:fontFamily="@font/NotoSans"
+        android:fontFamily="@font/noto_sans"
         android:textColor="@color/dark_464646"
         android:text="git" />
 
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
-        android:fontFamily="@font/NotoSans"
+        android:fontFamily="@font/noto_sans"
         android:textColor="@color/dark_464646"
         android:text="pdf" />
 
@@ -73,7 +73,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
-        android:fontFamily="@font/NotoSans"
+        android:fontFamily="@font/noto_sans"
         android:textColor="@color/dark_464646"
         android:text="api doc" />
 

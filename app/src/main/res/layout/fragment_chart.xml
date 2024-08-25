@@ -3,7 +3,130 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingHorizontal="@dimen/_16sdp"
+    android:paddingVertical="@dimen/_12sdp"
+    android:background="@color/background_F2F2F2"
     tools:context=".ui.fragment.ChartFragment">
+    
+    <LinearLayout
+        android:id="@+id/llChart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/_5sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/txtSensor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingVertical="@dimen/_5sdp"
+            android:text="Sensor"
+            android:fontFamily="@font/noto_sans"
+            android:textColor="@color/background_F2F2F2"
+            android:textSize="@dimen/_18ssp"
+            android:background="@drawable/bg_radius_left"
+            android:backgroundTint="@color/dark_464646"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/txtDevice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingVertical="@dimen/_5sdp"
+            android:text="Device"
+            android:fontFamily="@font/noto_sans"
+            android:textColor="@color/dark_464646"
+            android:textSize="@dimen/_18ssp"
+            android:background="@drawable/bg_radius_right"
+            android:backgroundTint="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgSort"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:padding="@dimen/_1sdp"
+        app:layout_constraintTop_toBottomOf="@id/llChart"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/ic_sort"
+        android:layout_marginTop="@dimen/_10sdp" />
+
+    <ImageView
+        android:id="@+id/imgSearch"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        app:layout_constraintTop_toTopOf="@id/edtSearch"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/ic_search" />
+
+    <EditText
+        android:id="@+id/edtSearch"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/imgSort"
+        app:layout_constraintStart_toEndOf="@id/imgSort"
+        app:layout_constraintEnd_toStartOf="@id/imgSearch"
+        app:layout_constraintBottom_toBottomOf="@id/imgSort"
+        android:background="@drawable/bg_radius_12"
+        android:backgroundTint="@color/white"
+        android:hint="Search here..."
+        android:textColor="@color/dark_464646"
+        android:maxLines="1"
+        android:fontFamily="@font/noto_sans"
+        android:textSize="@dimen/_15ssp"
+        android:padding="@dimen/_5sdp"
+        android:layout_marginHorizontal="@dimen/_10sdp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        tools:listitem="@layout/sensor_item_layout"
+        app:layout_constraintTop_toBottomOf="@id/imgSort"
+        app:layout_constraintBottom_toTopOf="@id/txtPage"
+        android:layout_marginVertical="@dimen/_10sdp" />
+
+    <ImageView
+        android:id="@+id/imgNext"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imgSearch"
+        android:src="@drawable/ic_next" />
+
+    <ImageView
+        android:id="@+id/imgPrevious"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgSort"
+        android:src="@drawable/ic_previous" />
+
+    <TextView
+        android:id="@+id/txtPage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="1/20"
+        android:gravity="center"
+        android:fontFamily="@font/noto_sans"
+        android:textColor="@color/dark_464646"
+        android:textSize="@dimen/_15ssp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/imgPrevious"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgPrevious"
+        app:layout_constraintEnd_toStartOf="@id/imgNext" />"
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

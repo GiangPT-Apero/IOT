@@ -11,11 +11,9 @@ class UserFragment : BaseFragment<FragmentUserBinding>(R.layout.fragment_user) {
     }
 
     override fun initView() {
-        TODO("Not yet implemented")
     }
 
     override fun observeViewModel() {
-        TODO("Not yet implemented")
     }
 
 }
