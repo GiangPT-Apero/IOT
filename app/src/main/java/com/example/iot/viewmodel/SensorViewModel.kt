@@ -5,52 +5,25 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.iot.model.BrightSensorResponse
-import com.example.iot.model.HumSensorResponse
-import com.example.iot.model.TempSensorResponse
+import com.example.iot.model.SensorResponse
 
 class SensorViewModel(application: Application) : ViewModel() {
-    private val _listTempResponse = MutableLiveData<ArrayList<TempSensorResponse>>()
-    val listTempResponse: LiveData<ArrayList<TempSensorResponse>>
-        get() = _listTempResponse
-
-    private val _listHumResponse = MutableLiveData<ArrayList<HumSensorResponse>>()
-    val listHumResponse: LiveData<ArrayList<HumSensorResponse>>
-        get() = _listHumResponse
-
-    private val _listBrightResponse = MutableLiveData<ArrayList<BrightSensorResponse>>()
-    val listBrightResponse: LiveData<ArrayList<BrightSensorResponse>>
-        get() = _listBrightResponse
-
+    private val _listSensorResponse = MutableLiveData<ArrayList<SensorResponse>>()
+    val listSensorResponse: LiveData<ArrayList<SensorResponse>>
+        get() = _listSensorResponse
 
     fun generateSampleData() {
-        val brightSensorData = List(10) { index ->
-            BrightSensorResponse(
+        val sensorData = List(20) { index ->
+            SensorResponse (
                 id = index + 1,
                 time = System.currentTimeMillis() - (index * 1000L),
-                result = (0..100).random().toLong()  // Generating a random brightness value between 0 and 100
+                brightResponse = (0..100).random().toLong(),
+                humResponse = (0..100).random().toLong(),
+                tempResponse = (0..40).random().toLong()
             )
         }
 
-        val humSensorData = List(10) { index ->
-            HumSensorResponse(
-                id = index + 1,
-                time = System.currentTimeMillis() - (index * 1000L),
-                result = (0..100).random().toLong()  // Generating a random humidity value between 0 and 100
-            )
-        }
-
-        val tempSensorData = List(10) { index ->
-            TempSensorResponse(
-                id = index + 1,
-                time = System.currentTimeMillis() - (index * 1000L),
-                result = (0..40).random().toLong()  // Generating a random temperature value between -20 and 40 degrees Celsius
-            )
-        }
-
-        _listBrightResponse.value = ArrayList(brightSensorData)
-        _listHumResponse.value = ArrayList(humSensorData)
-        _listTempResponse.value = ArrayList(tempSensorData)
+        _listSensorResponse.value = ArrayList(sensorData)
     }
 
     class SensorViewModelFactory(private val application: Application) : ViewModelProvider.Factory {

@@ -10,15 +10,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.iot.R
 import com.example.iot.databinding.ActivityMainBinding
-import com.example.iot.model.BrightSensorResponse
-import com.example.iot.model.HumSensorResponse
-import com.example.iot.model.TempSensorResponse
+import com.example.iot.viewmodel.DeviceViewModel
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -6,11 +6,29 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.iot.model.DeviceResponse
+import com.example.iot.model.SensorResponse
+import kotlin.random.Random
 
 class DeviceViewModel(application: Application): ViewModel() {
-    private val _deviceList = MutableLiveData<List<Device>>()
-    val deviceList: LiveData<List<Device>>
-        get() = _deviceList
+    private val _listDeviceResponse = MutableLiveData<ArrayList<DeviceResponse>>()
+    val listDeviceResponse: LiveData<ArrayList<DeviceResponse>>
+        get() = _listDeviceResponse
+
+    fun generateSampleData() {
+        val random = Random.Default
+
+        val deviceData = List(20) { index ->
+            DeviceResponse(
+                id = index + 1,
+                name = "Device ${index + 1}",
+                action = random.nextBoolean(),
+                time = System.currentTimeMillis() - (index * 1000L)
+            )
+        }
+
+        _listDeviceResponse.value = ArrayList(deviceData)
+    }
 
     class DeviceViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
         override fun <T: ViewModel> create(modelClass: Class<T>): T {
@@ -21,14 +39,4 @@ class DeviceViewModel(application: Application): ViewModel() {
             throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
-}
-
-enum class Device (
-    val id: Int,
-    val deviceName: String,
-    @DrawableRes
-    val icon: Int,
-    val isOn: Boolean,
-) {
-
 }

@@ -1,9 +1,9 @@
 package com.example.iot.ui.fragment.home
 
-import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
 import com.example.iot.R
+import com.example.iot.adapter.HomeAdapter
 import com.example.iot.databinding.FragmentHomeBinding
 import com.example.iot.ui.base.BaseFragment
 import com.github.mikephil.charting.components.XAxis

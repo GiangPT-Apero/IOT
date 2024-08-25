@@ -28,7 +28,7 @@
             android:paddingVertical="@dimen/_5sdp"
             android:text="Sensor"
             android:fontFamily="@font/noto_sans"
-            android:textColor="@color/background_F2F2F2"
+            android:textColor="@color/white"
             android:textSize="@dimen/_18ssp"
             android:background="@drawable/bg_radius_left"
             android:backgroundTint="@color/dark_464646"
