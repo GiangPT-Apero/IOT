@@ -51,9 +51,9 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment_chart
 
     override fun observeViewModel() {
         deviceViewModel.generateSampleData()
-        sensorViewModel.generateSampleData()
+        sensorViewModel.generateSampleDataTable()
         tableAdapter.setListDevice(deviceViewModel.listDeviceResponse.value!!)
-        tableAdapter.setListSensor(sensorViewModel.listSensorResponse.value!!)
+        tableAdapter.setListSensor(sensorViewModel.listSensorResponseTable.value!!)
     }
 
     private fun changeTable(isDevice: Boolean) {

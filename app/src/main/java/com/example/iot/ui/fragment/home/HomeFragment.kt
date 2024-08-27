@@ -2,10 +2,12 @@ package com.example.iot.ui.fragment.home
 
 import android.os.Handler
 import android.os.Looper
+import androidx.lifecycle.ViewModelProvider
 import com.example.iot.R
 import com.example.iot.adapter.HomeAdapter
 import com.example.iot.databinding.FragmentHomeBinding
 import com.example.iot.ui.base.BaseFragment
+import com.example.iot.viewmodel.SensorViewModel
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
@@ -19,13 +21,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private val MAX_ENTRIES = 20 // Số lượng giá trị mới nhất muốn giữ lại
 
-    private val temperatureDataSet = LineDataSet(mutableListOf(), "Temperature")
-    private val humidityDataSet = LineDataSet(mutableListOf(), "Humidity")
-    private val lightDataSet = LineDataSet(mutableListOf(), "Light")
+    private val sensorViewModel: SensorViewModel by lazy {
+        ViewModelProvider(
+            requireActivity(),
+            SensorViewModel.SensorViewModelFactory(requireActivity().application)
+        )[SensorViewModel::class.java]
+    }
 
     private val handler = Handler(Looper.getMainLooper())
     private val updateRunnable = object : Runnable {
-        private var index = 0
+        private var index = sensorViewModel.temperatureDataSet.entryCount
         private val xValues = mutableListOf<String>()
 
         override fun run() {
@@ -33,31 +38,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                 handler.postDelayed(this, 5000)
             }
             xValues.add(index.toString())
-            val temperatureEntry = Entry(index.toFloat(), Random.nextFloat() * 30)
-            val humidityEntry = Entry(index.toFloat(), Random.nextFloat() * 100)
-            val lightEntry = Entry(index.toFloat(), Random.nextFloat() * 1000)
 
-            temperatureDataSet.addEntry(temperatureEntry)
-            humidityDataSet.addEntry(humidityEntry)
-            lightDataSet.addEntry(lightEntry)
+            sensorViewModel.getNewestSensorResponse(index)
 
-
-            if (temperatureDataSet.entryCount > MAX_ENTRIES) {
+            if (sensorViewModel.temperatureDataSet.entryCount > MAX_ENTRIES) {
                 xValues.removeFirst()
-                temperatureDataSet.removeFirst()
-                humidityDataSet.removeFirst()
-                lightDataSet.removeFirst()
+                sensorViewModel.temperatureDataSet.removeFirst()
+                sensorViewModel.humidityDataSet.removeFirst()
+                sensorViewModel.lightDataSet.removeFirst()
             }
 
-            temperatureDataSet.notifyDataSetChanged()
-            humidityDataSet.notifyDataSetChanged()
-            lightDataSet.notifyDataSetChanged()
+            sensorViewModel.temperatureDataSet.notifyDataSetChanged()
+            sensorViewModel.humidityDataSet.notifyDataSetChanged()
+            sensorViewModel.lightDataSet.notifyDataSetChanged()
 
             binding.lineChart.data.notifyDataChanged()
             binding.lineChart.notifyDataSetChanged()
             binding.lineChart.invalidate() // Refresh chart view
 
-            index += 1
             binding.lineChart.xAxis.valueFormatter = IndexAxisValueFormatter(xValues)
             binding.lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
             binding.lineChart.xAxis.labelCount = xValues.size
@@ -88,22 +86,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     private fun setupChart() {
-        temperatureDataSet.apply {
+        sensorViewModel.temperatureDataSet.apply {
             color = resources.getColor(android.R.color.holo_red_dark)
             axisDependency = YAxis.AxisDependency.LEFT
         }
 
-        humidityDataSet.apply {
+        sensorViewModel.humidityDataSet.apply {
             color = resources.getColor(android.R.color.holo_blue_dark)
             axisDependency = YAxis.AxisDependency.LEFT
         }
 
-        lightDataSet.apply {
+        sensorViewModel.lightDataSet.apply {
             color = resources.getColor(android.R.color.holo_orange_dark)
             axisDependency = YAxis.AxisDependency.RIGHT
         }
 
-        val lineData = LineData(temperatureDataSet, humidityDataSet, lightDataSet)
+        val lineData = LineData(sensorViewModel.temperatureDataSet, sensorViewModel.humidityDataSet, sensorViewModel.lightDataSet)
         binding.lineChart.data = lineData
         binding.lineChart.description.isEnabled = false
 

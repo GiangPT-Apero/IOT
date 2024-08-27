@@ -8,8 +8,9 @@
 
     <ImageView
         android:id="@+id/imgBrightness"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_120sdp"
+        android:padding="@dimen/_10sdp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
