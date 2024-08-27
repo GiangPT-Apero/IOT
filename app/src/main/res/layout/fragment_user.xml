@@ -20,7 +20,8 @@
             android:id="@+id/imgAvatar"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_100sdp"
-            android:src="@drawable/ic_launcher_background"/>
+            android:scaleType="centerCrop"
+            android:src="@drawable/avatar"/>
     </androidx.cardview.widget.CardView>
 
     <TextView

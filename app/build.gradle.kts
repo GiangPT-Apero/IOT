@@ -87,7 +87,7 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.1.0")
     implementation("androidx.fragment:fragment-ktx:1.8.2")
 
-    //implementation(libs.williamchart)
     implementation(libs.mpandroidchart)
-    //implementation(libs.anychart.android)
+
+    implementation("com.airbnb.android:lottie:5.0.3")
 }

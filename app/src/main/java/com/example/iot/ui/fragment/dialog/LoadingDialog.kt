@@ -16,6 +16,7 @@ class LoadingDialog: DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
+        dialog.setCanceledOnTouchOutside(false)
         dialog.setCancelable(true)
         return dialog
     }
@@ -32,7 +33,7 @@ class LoadingDialog: DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launch {
-            delay(3000)
+            delay(1000)
             dismiss()
         }
     }

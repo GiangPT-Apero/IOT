@@ -24,10 +24,10 @@ class BrightnessFragment : BaseFragment<FragmentBrightnessBinding>(R.layout.frag
 
     override fun observeViewModel() {
         sensorViewModel.newestSensorResponse.observe(viewLifecycleOwner) {
-            binding.txtBrightness.text = it.tempResponse.toString() + " Lx"
-            if (it.tempResponse < 400) {
+            binding.txtBrightness.text = it.brightResponse.toString() + " Lx"
+            if (it.brightResponse < 400) {
                 binding.imgBrightness.setImageResource(R.drawable.bright_3)
-            } else if (it.tempResponse < 700) {
+            } else if (it.brightResponse < 700) {
                 binding.imgBrightness.setImageResource(R.drawable.bright_2)
             } else {
                 binding.imgBrightness.setImageResource(R.drawable.bright_1)

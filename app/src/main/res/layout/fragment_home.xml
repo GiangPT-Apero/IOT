@@ -34,7 +34,8 @@
         <ImageView
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
-            android:src="@drawable/ic_launcher_background" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/avatar" />
     </androidx.cardview.widget.CardView>
 
     <com.github.mikephil.charting.charts.LineChart
@@ -55,6 +56,7 @@
         app:tabTextColor="@color/tab_text_color"
         app:tabSelectedTextColor="@color/dark_464646"
         app:tabIndicatorHeight="2dp"
+        app:tabMode="scrollable"
         app:tabIndicatorColor="@color/dark_464646"
         app:layout_constraintTop_toBottomOf="@id/lineChart"
         app:layout_constraintEnd_toEndOf="parent"

@@ -25,12 +25,14 @@ class TemperatureFragment : BaseFragment<FragmentTemperatureBinding>(R.layout.fr
     override fun observeViewModel() {
         sensorViewModel.newestSensorResponse.observe(viewLifecycleOwner) {
             binding.txtTemperature.text = it.tempResponse.toString() + "°C"
-            if (it.tempResponse <= 20) {
+            if (it.tempResponse <= 18) {
                 binding.imgTemperature.setImageResource(R.drawable.temp_1)
-            } else if (it.tempResponse <= 32) {
+            } else if (it.tempResponse <= 28) {
                 binding.imgTemperature.setImageResource(R.drawable.temp_2)
-            } else {
+            } else if (it.tempResponse <= 35){
                 binding.imgTemperature.setImageResource(R.drawable.temp_3)
+            } else {
+                binding.imgTemperature.setImageResource(R.drawable.temp_4)
             }
         }
     }

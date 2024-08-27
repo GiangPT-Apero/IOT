@@ -37,15 +37,16 @@
                 android:id="@+id/imgLight"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
-                android:src="@drawable/ic_launcher_background"
+                android:src="@drawable/ic_tv"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
+                android:id="@+id/txtLight"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Smart Light"
+                android:text="Smart TV"
                 android:textStyle="bold"
                 android:fontFamily="@font/noto_sans"
                 android:textSize="@dimen/_18ssp"
@@ -56,14 +57,24 @@
                 app:layout_constraintStart_toEndOf="@id/imgLight"
                 app:layout_constraintEnd_toStartOf="@id/btnLight"/>
 
+            <TextView
+                android:id="@+id/txtStateLight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="OFF"
+                android:textSize="@dimen/_12ssp"
+                android:fontFamily="@font/noto_sans"
+                android:textColor="@color/dark_464646"
+                app:layout_constraintTop_toBottomOf="@id/txtLight"
+                app:layout_constraintStart_toStartOf="@id/txtLight"
+                app:layout_constraintEnd_toEndOf="@id/txtLight" />
+
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/btnLight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:track="@drawable/custom_track"
                 android:thumb="@drawable/custom_thumb"
-                android:textOn="ON"
-                android:textOff="OFF"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
@@ -84,12 +95,13 @@
             android:id="@+id/imgFan"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
-            android:src="@drawable/ic_launcher_background"
+            android:src="@drawable/ic_fan"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
+            android:id="@+id/txtFan"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Smart Fan"
@@ -102,6 +114,18 @@
             app:layout_constraintTop_toTopOf="@id/imgFan"
             app:layout_constraintStart_toEndOf="@id/imgFan"
             app:layout_constraintEnd_toStartOf="@id/btnFan"/>
+
+        <TextView
+            android:id="@+id/txtStateFan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="OFF"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/noto_sans"
+            android:textColor="@color/dark_464646"
+            app:layout_constraintTop_toBottomOf="@id/txtFan"
+            app:layout_constraintStart_toStartOf="@id/txtFan"
+            app:layout_constraintEnd_toEndOf="@id/txtFan" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/btnFan"
@@ -131,12 +155,13 @@
             android:id="@+id/imgAC"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
-            android:src="@drawable/ic_launcher_background"
+            android:src="@drawable/ic_ac"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
+            android:id="@+id/txtAC"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Smart AC"
@@ -149,6 +174,19 @@
             app:layout_constraintTop_toTopOf="@id/imgAC"
             app:layout_constraintStart_toEndOf="@id/imgAC"
             app:layout_constraintEnd_toStartOf="@id/btnAC"/>
+
+        <TextView
+            android:id="@+id/txtStateAC"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="OFF"
+            android:textSize="@dimen/_12ssp"
+            android:fontFamily="@font/noto_sans"
+            android:textColor="@color/dark_464646"
+            app:layout_constraintTop_toBottomOf="@id/txtAC"
+            app:layout_constraintStart_toStartOf="@id/txtAC"
+            app:layout_constraintEnd_toEndOf="@id/txtAC" />
+
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/btnAC"
