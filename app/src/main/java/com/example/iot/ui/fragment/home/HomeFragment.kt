@@ -2,6 +2,7 @@ package com.example.iot.ui.fragment.home
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.example.iot.R
 import com.example.iot.adapter.HomeAdapter
@@ -19,49 +20,11 @@ import kotlin.random.Random
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
-    private val MAX_ENTRIES = 20 // Số lượng giá trị mới nhất muốn giữ lại
-
     private val sensorViewModel: SensorViewModel by lazy {
         ViewModelProvider(
             requireActivity(),
             SensorViewModel.SensorViewModelFactory(requireActivity().application)
         )[SensorViewModel::class.java]
-    }
-
-    private val handler = Handler(Looper.getMainLooper())
-    private val updateRunnable = object : Runnable {
-        private var index = sensorViewModel.temperatureDataSet.entryCount
-        private val xValues = mutableListOf<String>()
-
-        override fun run() {
-            if (index == 0) {
-                handler.postDelayed(this, 5000)
-            }
-            xValues.add(index.toString())
-
-            sensorViewModel.getNewestSensorResponse(index)
-
-            if (sensorViewModel.temperatureDataSet.entryCount > MAX_ENTRIES) {
-                xValues.removeFirst()
-                sensorViewModel.temperatureDataSet.removeFirst()
-                sensorViewModel.humidityDataSet.removeFirst()
-                sensorViewModel.lightDataSet.removeFirst()
-            }
-
-            sensorViewModel.temperatureDataSet.notifyDataSetChanged()
-            sensorViewModel.humidityDataSet.notifyDataSetChanged()
-            sensorViewModel.lightDataSet.notifyDataSetChanged()
-
-            binding.lineChart.data.notifyDataChanged()
-            binding.lineChart.notifyDataSetChanged()
-            binding.lineChart.invalidate() // Refresh chart view
-
-            binding.lineChart.xAxis.valueFormatter = IndexAxisValueFormatter(xValues)
-            binding.lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
-            binding.lineChart.xAxis.labelCount = xValues.size
-
-            handler.postDelayed(this, 1000) // Update every second
-        }
     }
 
     override fun getViewBinding(): FragmentHomeBinding {
@@ -79,29 +42,45 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         }.attach()
 
         setupChart()
-        startDataUpdates()
     }
 
     override fun observeViewModel() {
+        sensorViewModel.temperatureDataSet.observe(viewLifecycleOwner) {
+            Log.d("GiangPT", "update chart")
+            sensorViewModel.apply {
+                val lineData = LineData(
+                    temperatureDataSet.value,
+                    humidityDataSet.value,
+                    lightDataSet.value
+                )
+                binding.lineChart.data = lineData
+                binding.lineChart.data.notifyDataChanged()
+                binding.lineChart.notifyDataSetChanged()
+                binding.lineChart.invalidate()
+
+                binding.lineChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+                binding.lineChart.xAxis.labelCount = temperatureDataSet.value?.entryCount ?: 0
+            }
+        }
     }
 
     private fun setupChart() {
-        sensorViewModel.temperatureDataSet.apply {
+        sensorViewModel.temperatureDataSet.value?.apply {
             color = resources.getColor(android.R.color.holo_red_dark)
             axisDependency = YAxis.AxisDependency.LEFT
         }
 
-        sensorViewModel.humidityDataSet.apply {
+        sensorViewModel.humidityDataSet.value?.apply {
             color = resources.getColor(android.R.color.holo_blue_dark)
             axisDependency = YAxis.AxisDependency.LEFT
         }
 
-        sensorViewModel.lightDataSet.apply {
+        sensorViewModel.lightDataSet.value?.apply {
             color = resources.getColor(android.R.color.holo_orange_dark)
             axisDependency = YAxis.AxisDependency.RIGHT
         }
 
-        val lineData = LineData(sensorViewModel.temperatureDataSet, sensorViewModel.humidityDataSet, sensorViewModel.lightDataSet)
+        val lineData = LineData(sensorViewModel.temperatureDataSet.value, sensorViewModel.humidityDataSet.value, sensorViewModel.lightDataSet.value)
         binding.lineChart.data = lineData
         binding.lineChart.description.isEnabled = false
 
@@ -121,13 +100,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         }
     }
 
-
-    private fun startDataUpdates() {
-        updateRunnable.run()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
-        handler.removeCallbacks(updateRunnable)
     }
 }
