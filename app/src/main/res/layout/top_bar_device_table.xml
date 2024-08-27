@@ -7,43 +7,43 @@
 
     <TextView
         android:id="@+id/txtId"
-        style="@style/table_row_item"
+        style="@style/table_top_bar"
         android:layout_width="0dp"
         android:layout_column="0"
         android:layout_margin="1dp"
         android:layout_weight="0.4"
-        android:background="@color/white"
+        android:text="ID"
         android:textAlignment="center" />
 
     <TextView
         android:id="@+id/txtName"
-        style="@style/table_row_item"
+        style="@style/table_top_bar"
         android:layout_width="0dp"
         android:layout_column="1"
         android:layout_margin="1dp"
         android:layout_weight="0.8"
-        android:background="@color/white"
+        android:text="DEVICE"
         android:textAlignment="center" />
 
     <TextView
         android:id="@+id/txtAction"
-        style="@style/table_row_item"
+        style="@style/table_top_bar"
         android:layout_width="0dp"
         android:layout_column="2"
         android:layout_margin="1dp"
         android:layout_weight="0.4"
-        android:background="@color/white"
+        android:text="ACTION"
         android:baselineAligned="false"
         android:textAlignment="center" />
 
     <TextView
         android:id="@+id/txtTime"
-        style="@style/table_row_item"
+        style="@style/table_top_bar"
         android:layout_width="0dp"
         android:layout_column="3"
         android:layout_margin="1dp"
         android:layout_weight="1"
-        android:background="@color/white"
+        android:text="TIME"
         android:baselineAligned="false"
         android:textAlignment="center" />
 

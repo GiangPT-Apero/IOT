@@ -88,14 +88,26 @@
         android:padding="@dimen/_5sdp"
         android:layout_marginHorizontal="@dimen/_10sdp"/>
 
+    <LinearLayout
+        android:id="@+id/llTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@id/edtSearch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <include layout="@layout/top_bar_sensor_table"/>
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChart"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/_10sdp"
         tools:listitem="@layout/sensor_item_layout"
-        app:layout_constraintTop_toBottomOf="@id/imgSort"
-        app:layout_constraintBottom_toTopOf="@id/txtPage"
-        android:layout_marginVertical="@dimen/_10sdp" />
+        app:layout_constraintTop_toBottomOf="@id/llTopBar"
+        app:layout_constraintBottom_toTopOf="@id/txtPage" />
 
     <ImageView
         android:id="@+id/imgNext"

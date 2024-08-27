@@ -30,7 +30,7 @@
         android:textStyle="bold"
         android:fontFamily="@font/noto_sans"
         android:textColor="@color/dark_464646"
-        android:text="Ten" />
+        android:text="Phạm Tuấn Giang" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -39,7 +39,16 @@
         android:textStyle="bold"
         android:fontFamily="@font/noto_sans"
         android:textColor="@color/dark_464646"
-        android:text="Ma sv" />
+        android:text="B21DCCN307" />
+
+<!--    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_20ssp"
+        android:textStyle="bold"
+        android:fontFamily="@font/noto_sans"
+        android:textColor="@color/dark_464646"
+        android:text="Ten" />-->
 
     <TextView
         android:layout_width="wrap_content"
@@ -48,7 +57,7 @@
         android:textStyle="bold"
         android:fontFamily="@font/noto_sans"
         android:textColor="@color/dark_464646"
-        android:text="Ten" />
+        android:text="Github" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -57,7 +66,7 @@
         android:textStyle="bold"
         android:fontFamily="@font/noto_sans"
         android:textColor="@color/dark_464646"
-        android:text="git" />
+        android:text="Báo cáo" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,15 +75,6 @@
         android:textStyle="bold"
         android:fontFamily="@font/noto_sans"
         android:textColor="@color/dark_464646"
-        android:text="pdf" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/_20ssp"
-        android:textStyle="bold"
-        android:fontFamily="@font/noto_sans"
-        android:textColor="@color/dark_464646"
-        android:text="api doc" />
+        android:text="API Doc" />
 
 </LinearLayout>

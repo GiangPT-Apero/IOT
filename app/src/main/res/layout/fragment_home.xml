@@ -52,7 +52,9 @@
         android:layout_height="wrap_content"
         android:background="@color/background_F2F2F2"
         app:tabRippleColor="@null"
-        app:tabIndicatorHeight="0dp"
+        app:tabTextColor="@color/tab_text_color"
+        app:tabIndicatorHeight="2dp"
+        app:tabIndicatorColor="@color/dark_464646"
         app:layout_constraintTop_toBottomOf="@id/lineChart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>

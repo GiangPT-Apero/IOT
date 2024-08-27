@@ -60,6 +60,10 @@
                 android:id="@+id/btnLight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:track="@drawable/custom_track"
+                android:thumb="@drawable/custom_thumb"
+                android:textOn="ON"
+                android:textOff="OFF"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
@@ -103,6 +107,10 @@
             android:id="@+id/btnFan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:track="@drawable/custom_track"
+            android:thumb="@drawable/custom_thumb"
+            android:textOn="ON"
+            android:textOff="OFF"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
@@ -131,7 +139,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Smart Air Condition"
+            android:text="Smart AC"
             android:textStyle="bold"
             android:fontFamily="@font/noto_sans"
             android:textSize="@dimen/_18ssp"
@@ -146,6 +154,10 @@
             android:id="@+id/btnAC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:track="@drawable/custom_track"
+            android:thumb="@drawable/custom_thumb"
+            android:textOn="ON"
+            android:textOff="OFF"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
