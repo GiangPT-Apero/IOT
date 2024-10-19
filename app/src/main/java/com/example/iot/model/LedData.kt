@@ -1,8 +1,8 @@
 package com.example.iot.model
 
-data class DeviceResponse(
+data class LedData(
     val id: Int,
-    val name: String,
+    val ledName: String,
     val action: Boolean,
-    val time: Long,
+    val timeStamp: Long,
 )

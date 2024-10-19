@@ -10,7 +10,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.iot.R
 import com.example.iot.databinding.ActivityMainBinding
-import com.example.iot.viewmodel.DeviceViewModel
 
 class MainActivity : AppCompatActivity() {
 

@@ -3,28 +3,27 @@ package com.example.iot.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.iot.databinding.DeviceItemLayoutBinding
 import com.example.iot.databinding.SensorItemLayoutBinding
-import com.example.iot.model.DeviceResponse
-import com.example.iot.model.SensorResponse
+import com.example.iot.model.LedData
+import com.example.iot.model.SensorData
 
 class TableAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val SENSOR_TYPE = 0
     private val DEVICE_TYPE = 1
     private var currentType = SENSOR_TYPE
-    private var listSensor = ArrayList<SensorResponse>()
-    private var listDevice = ArrayList<DeviceResponse>()
+    private var listSensor = ArrayList<SensorData>()
+    private var listDevice = ArrayList<LedData>()
     private var itemPerPage = 10
     private var currentPage = 1
 
-    fun setListSensor(listSensor: ArrayList<SensorResponse>) {
+    fun setListSensor(listSensor: ArrayList<SensorData>) {
         this.listSensor = listSensor
     }
 
-    fun setListDevice(listDevice: ArrayList<DeviceResponse>) {
+    fun setListDevice(listDevice: ArrayList<LedData>) {
         this.listDevice = listDevice
     }
 
@@ -81,12 +80,12 @@ class TableAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class SensorViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         private val binding = SensorItemLayoutBinding.bind(itemView)
 
-        fun onBind(sensor: SensorResponse) {
+        fun onBind(sensor: SensorData) {
             binding.txtId.text = sensor.id.toString()
-            binding.txtTemperature.text = sensor.tempResponse.toString()
-            binding.txtHumidity.text = sensor.humResponse.toString()
-            binding.txtBrightness.text = sensor.brightResponse.toString()
-            binding.txtTime.text = sensor.time.toString()
+            binding.txtTemperature.text = sensor.temperature.toString()
+            binding.txtHumidity.text = sensor.humidity.toString()
+            binding.txtBrightness.text = sensor.light.toString()
+            binding.txtTime.text = sensor.timestamp
         }
 
     }
@@ -94,11 +93,11 @@ class TableAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class DeviceViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         private val binding = DeviceItemLayoutBinding.bind(itemView)
 
-        fun onBind(device: DeviceResponse) {
+        fun onBind(device: LedData) {
             binding.txtId.text = device.id.toString()
-            binding.txtName.text = device.name
+            binding.txtName.text = device.ledName
             binding.txtAction.text = device.action.toString()
-            binding.txtTime.text = device.time.toString()
+            binding.txtTime.text = device.timeStamp.toString()
         }
     }
 }

@@ -1,7 +1,8 @@
 package com.example.iot.ui.fragment
 
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.iot.R
 import com.example.iot.adapter.TableAdapter
@@ -11,24 +12,16 @@ import com.example.iot.databinding.TopBarSensorTableBinding
 import com.example.iot.ui.base.BaseFragment
 import com.example.iot.viewmodel.DeviceViewModel
 import com.example.iot.viewmodel.SensorViewModel
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.launch
 
 class ChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment_chart) {
 
     private val tableAdapter = TableAdapter()
 
-    private val deviceViewModel: DeviceViewModel by lazy {
-        ViewModelProvider(
-            requireActivity(),
-            DeviceViewModel.DeviceViewModelFactory(requireActivity().application)
-        )[DeviceViewModel::class.java]
-    }
+    private val deviceViewModel: DeviceViewModel by viewModels()
 
-    private val sensorViewModel: SensorViewModel by lazy {
-        ViewModelProvider(
-            requireActivity(),
-            SensorViewModel.SensorViewModelFactory(requireActivity().application)
-        )[SensorViewModel::class.java]
-    }
+    private val sensorViewModel: SensorViewModel by viewModels()
 
     override fun getViewBinding(): FragmentChartBinding {
         return FragmentChartBinding.inflate(layoutInflater)
@@ -50,10 +43,17 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment_chart
     }
 
     override fun observeViewModel() {
-        deviceViewModel.generateSampleData()
-        sensorViewModel.generateSampleDataTable()
-        tableAdapter.setListDevice(deviceViewModel.listDeviceResponse.value!!)
-        tableAdapter.setListSensor(sensorViewModel.listSensorResponseTable.value!!)
+        viewLifecycleOwner.lifecycleScope.launch {
+            deviceViewModel.listDeviceResponse.filterNotNull().collect { listDeviceResponse ->
+                tableAdapter.setListDevice(ArrayList(listDeviceResponse.content))
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            sensorViewModel.listSensorResponseTable.filterNotNull().collect { listSensorResponseTable ->
+                tableAdapter.setListSensor(ArrayList(listSensorResponseTable.content))
+            }
+        }
     }
 
     private fun changeTable(isDevice: Boolean) {

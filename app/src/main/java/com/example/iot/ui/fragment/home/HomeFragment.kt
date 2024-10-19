@@ -1,37 +1,30 @@
 package com.example.iot.ui.fragment.home
 
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.example.iot.R
 import com.example.iot.adapter.HomeAdapter
 import com.example.iot.databinding.FragmentHomeBinding
 import com.example.iot.ui.base.BaseFragment
+import com.example.iot.viewmodel.DeviceViewModel
 import com.example.iot.viewmodel.SensorViewModel
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlin.random.Random
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
-    private val sensorViewModel: SensorViewModel by lazy {
-        ViewModelProvider(
-            requireActivity(),
-            SensorViewModel.SensorViewModelFactory(requireActivity().application)
-        )[SensorViewModel::class.java]
-    }
+    private val sensorViewModel: SensorViewModel by viewModels()
+    private val ledViewModel: DeviceViewModel by viewModels()
 
     override fun getViewBinding(): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(layoutInflater)
     }
 
     override fun initView() {
+        fetchData()
+
         binding.viewPager.adapter = HomeAdapter(requireActivity())
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             when (position) {
@@ -98,6 +91,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             axisMaximum = 1000f
             axisMinimum = 0f
         }
+    }
+
+    private fun fetchData() {
+        sensorViewModel.fetchSensorData()
+        ledViewModel.fetchLedData()
     }
 
     override fun onDestroyView() {

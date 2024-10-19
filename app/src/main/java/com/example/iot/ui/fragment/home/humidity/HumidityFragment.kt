@@ -1,5 +1,6 @@
 package com.example.iot.ui.fragment.home
 
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.iot.R
 import com.example.iot.databinding.FragmentHumidityBinding
@@ -8,12 +9,7 @@ import com.example.iot.viewmodel.SensorViewModel
 
 class HumidityFragment : BaseFragment<FragmentHumidityBinding>(R.layout.fragment_humidity) {
 
-    private val sensorViewModel: SensorViewModel by lazy {
-        ViewModelProvider(
-            requireActivity(),
-            SensorViewModel.SensorViewModelFactory(requireActivity().application)
-        )[SensorViewModel::class.java]
-    }
+    private val sensorViewModel: SensorViewModel by viewModels()
 
     override fun getViewBinding(): FragmentHumidityBinding {
         return FragmentHumidityBinding.inflate(layoutInflater)
@@ -24,8 +20,8 @@ class HumidityFragment : BaseFragment<FragmentHumidityBinding>(R.layout.fragment
 
     override fun observeViewModel() {
         sensorViewModel.newestSensorResponse.observe(viewLifecycleOwner) {
-            binding.txtHumidity.text = it.humResponse.toString() + " %"
-            if (it.humResponse > 50) {
+            binding.txtHumidity.text = it.humidity.toString() + " %"
+            if (it.humidity > 50) {
                 binding.imgHumidity.setImageResource(R.drawable.hum_2)
             } else {
                 binding.imgHumidity.setImageResource(R.drawable.hum_1)

@@ -1,39 +1,46 @@
 package com.example.iot.viewmodel
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.iot.model.SensorResponse
-import com.github.mikephil.charting.components.XAxis
+import com.example.iot.model.PageResponse
+import com.example.iot.model.SensorData
+import com.example.iot.retrofit.RetrofitInstance
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlin.random.Random
+import retrofit2.HttpException
+import java.io.IOException
 
-class SensorViewModel(application: Application) : ViewModel() {
-    private val MAX_ENTRIES = 20 // Số lượng giá trị mới nhất muốn giữ lại
+class SensorViewModel : ViewModel() {
+    companion object {
+        const val MAX_ENTRIES = 20
+    }
 
     private var indexChart = 0
+    var itemPerPage = 20
+    var pageIndex = 0
 
-    private val _listSensorResponseTable = MutableLiveData<ArrayList<SensorResponse>>()
-    val listSensorResponseTable: LiveData<ArrayList<SensorResponse>>
-        get() = _listSensorResponseTable
+    private val _listSensorResponseTable = MutableStateFlow<PageResponse<SensorData>?>(null)
+    val listSensorResponseTable = _listSensorResponseTable.asStateFlow()
 
-    private val _newestSensorResponse = MutableLiveData<SensorResponse>()
-    val newestSensorResponse: LiveData<SensorResponse>
+    private val _newestSensorResponse = MutableLiveData<SensorData>()
+    val newestSensorResponse: LiveData<SensorData>
         get() = _newestSensorResponse
 
-    private val _temperatureDataSet = MutableLiveData<LineDataSet?>(LineDataSet(mutableListOf(), "Temperature"))
+    private val _temperatureDataSet =
+        MutableLiveData<LineDataSet?>(LineDataSet(mutableListOf(), "Temperature"))
     val temperatureDataSet: LiveData<LineDataSet?>
         get() = _temperatureDataSet
 
-    private val _humidityDataSet = MutableLiveData<LineDataSet?>(LineDataSet(mutableListOf(), "Humidity"))
+    private val _humidityDataSet =
+        MutableLiveData<LineDataSet?>(LineDataSet(mutableListOf(), "Humidity"))
     val humidityDataSet: LiveData<LineDataSet?>
         get() = _humidityDataSet
 
@@ -42,7 +49,7 @@ class SensorViewModel(application: Application) : ViewModel() {
         get() = _lightDataSet
 
     private fun startUpdateRunnable() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             while (true) {
                 getNewestSensorResponse()
                 delay(1000)
@@ -54,35 +61,49 @@ class SensorViewModel(application: Application) : ViewModel() {
         startUpdateRunnable()
     }
 
-    fun generateSampleDataTable() {
-        val sensorData = List(20) { index ->
-            SensorResponse (
-                id = index + 1,
-                time = System.currentTimeMillis() - (index * 1000L),
-                brightResponse = (0..1000).random().toLong(),
-                humResponse = (0..100).random().toLong(),
-                tempResponse = (0..40).random().toLong()
-            )
+    fun fetchSensorData() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val response = RetrofitInstance.sensorApi.getAllData(pageIndex, itemPerPage)
+                _listSensorResponseTable.emit(response)
+            } catch (e: IOException) {
+                // Xử lý lỗi kết nối
+                Log.d("GiangPT IOE", e.toString())
+            } catch (e: HttpException) {
+                // Xử lý lỗi HTTP
+                Log.d("GiangPT HTTP", e.toString())
+            }
         }
-
-        _listSensorResponseTable.value = ArrayList(sensorData)
     }
 
-    private fun getNewestSensorResponse() {
-        _newestSensorResponse.value = SensorResponse(
-            indexChart,
-            0,
-            tempResponse = (0..40).random().toLong(),
-            humResponse = (0..100).random().toLong(),
-            brightResponse = (0..1000).random().toLong(),
-        )
-        Log.d("GiangPT", "${_newestSensorResponse.value}")
+    private suspend fun getNewestSensorResponse() {
+        try {
+            val response = RetrofitInstance.sensorApi.getNewestData()
+            if (_newestSensorResponse.value != response) {
+                updateNewestSensorResponse(response)
+            }
+        } catch (e: IOException) {
+            // Xử lý lỗi kết nối
+            Log.d("GiangPT IOE", e.toString())
+        } catch (e: HttpException) {
+            // Xử lý lỗi HTTP
+            Log.d("GiangPT HTTP", e.toString())
+        }
+    }
+
+    private fun updateNewestSensorResponse(response: SensorData) {
+        _newestSensorResponse.postValue(response)
 
         val tempDataSet = _temperatureDataSet.value?.apply {
             if (entryCount >= MAX_ENTRIES) {
                 removeFirst()
             }
-            addEntry(Entry(indexChart.toFloat(), _newestSensorResponse.value!!.tempResponse.toFloat()))
+            addEntry(
+                Entry(
+                    indexChart.toFloat(),
+                    response.temperature.toFloat()
+                )
+            )
             notifyDataSetChanged()
         }
 
@@ -90,7 +111,12 @@ class SensorViewModel(application: Application) : ViewModel() {
             if (entryCount >= MAX_ENTRIES) {
                 removeFirst()
             }
-            addEntry(Entry(indexChart.toFloat(), _newestSensorResponse.value!!.humResponse.toFloat()))
+            addEntry(
+                Entry(
+                    indexChart.toFloat(),
+                    response.humidity.toFloat()
+                )
+            )
             notifyDataSetChanged()
         }
 
@@ -98,7 +124,12 @@ class SensorViewModel(application: Application) : ViewModel() {
             if (entryCount >= MAX_ENTRIES) {
                 removeFirst()
             }
-            addEntry(Entry(indexChart.toFloat(), _newestSensorResponse.value!!.brightResponse.toFloat()))
+            addEntry(
+                Entry(
+                    indexChart.toFloat(),
+                    response.light.toFloat()
+                )
+            )
             notifyDataSetChanged()
         }
 
@@ -107,18 +138,6 @@ class SensorViewModel(application: Application) : ViewModel() {
         _humidityDataSet.postValue(humDataSet)
         _lightDataSet.postValue(lightDataSet)
         _temperatureDataSet.postValue(tempDataSet)
-
     }
 
-
-
-    class SensorViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
-        override fun <T: ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(SensorViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return SensorViewModel(application) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
 }

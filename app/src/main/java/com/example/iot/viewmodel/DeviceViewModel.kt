@@ -1,42 +1,37 @@
 package com.example.iot.viewmodel
 
-import android.app.Application
-import androidx.annotation.DrawableRes
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.example.iot.model.DeviceResponse
-import com.example.iot.model.SensorResponse
-import kotlin.random.Random
+import androidx.lifecycle.viewModelScope
+import com.example.iot.model.LedData
+import com.example.iot.model.PageResponse
+import com.example.iot.retrofit.RetrofitInstance
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.io.IOException
 
-class DeviceViewModel(application: Application): ViewModel() {
-    private val _listDeviceResponse = MutableLiveData<ArrayList<DeviceResponse>>()
-    val listDeviceResponse: LiveData<ArrayList<DeviceResponse>>
-        get() = _listDeviceResponse
+class DeviceViewModel: ViewModel() {
+    private val _listDeviceResponse = MutableStateFlow<PageResponse<LedData>?>(null)
+    val listDeviceResponse = _listDeviceResponse.asStateFlow()
 
-    fun generateSampleData() {
-        val random = Random.Default
+    var itemPerPage = 20
+    var pageIndex = 0
 
-        val deviceData = List(20) { index ->
-            DeviceResponse(
-                id = index + 1,
-                name = "Device ${index + 1}",
-                action = random.nextBoolean(),
-                time = System.currentTimeMillis() - (index * 1000L)
-            )
-        }
-
-        _listDeviceResponse.value = ArrayList(deviceData)
-    }
-
-    class DeviceViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
-        override fun <T: ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(DeviceViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return DeviceViewModel(application) as T
+    fun fetchLedData() {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val response = RetrofitInstance.ledApi.getAllData(pageIndex, itemPerPage)
+                _listDeviceResponse.emit(response)
+            } catch (e: IOException) {
+                // Xử lý lỗi kết nối
+                Log.d("GiangPT IOE", e.toString())
+            } catch (e: HttpException) {
+                // Xử lý lỗi HTTP
+                Log.d("GiangPT HTTP", e.toString())
             }
-            throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
 }
