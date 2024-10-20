@@ -26,8 +26,10 @@ class ControlViewModel: ViewModel() {
 
     private fun startObserverLedState() {
         viewModelScope.launch(Dispatchers.IO) {
-            getStateLed()
-            delay(1000)
+            while (true) {
+                getStateLed()
+                delay(3000)
+            }
         }
     }
 

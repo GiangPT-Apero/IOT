@@ -1,12 +1,14 @@
 package com.example.iot.ui.fragment
 
 import android.graphics.Color
+import android.util.Log
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.work.Constraints
@@ -21,7 +23,7 @@ import kotlinx.coroutines.launch
 
 class ControlFragment : BaseFragment<FragmentControlBinding>(R.layout.fragment_control) {
 
-    private val controlViewModel: ControlViewModel by viewModels()
+    private val controlViewModel: ControlViewModel by activityViewModels<ControlViewModel>()
 
     private val loadingDialog = LoadingDialog()
 
@@ -47,10 +49,13 @@ class ControlFragment : BaseFragment<FragmentControlBinding>(R.layout.fragment_c
     override fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
             controlViewModel.stateLed.filterNotNull().collect { ledState ->
+                Log.d("GiangPT led state", "$ledState")
                 updateUi(ledState.led1, binding.txtStateLight, binding.txtLight, binding.loLight, binding.imgLight, binding.btnLight)
                 updateUi(ledState.led2, binding.txtStateFan, binding.txtFan, binding.loFan, binding.imgFan, binding.btnFan)
                 updateUi(ledState.led3, binding.txtStateAC, binding.txtAC, binding.loAC, binding.imgAC, binding.btnAC)
-                loadingDialog.dismiss()
+                if (loadingDialog.isAdded) {
+                    loadingDialog.dismiss()
+                }
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.example.iot.ui.fragment.home
 
 import android.util.Log
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.example.iot.R
 import com.example.iot.adapter.HomeAdapter
@@ -15,8 +16,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
-    private val sensorViewModel: SensorViewModel by viewModels()
-    private val ledViewModel: DeviceViewModel by viewModels()
+    private val sensorViewModel: SensorViewModel by activityViewModels<SensorViewModel>()
+    private val ledViewModel: DeviceViewModel by activityViewModels<DeviceViewModel>()
 
     override fun getViewBinding(): FragmentHomeBinding {
         return FragmentHomeBinding.inflate(layoutInflater)

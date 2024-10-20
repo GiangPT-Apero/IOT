@@ -1,5 +1,6 @@
-package com.example.iot.ui.fragment.home
+package com.example.iot.ui.fragment.home.temperature
 
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.iot.R
@@ -9,7 +10,7 @@ import com.example.iot.viewmodel.SensorViewModel
 
 class TemperatureFragment : BaseFragment<FragmentTemperatureBinding>(R.layout.fragment_temperature) {
 
-    private val sensorViewModel: SensorViewModel by viewModels()
+    private val sensorViewModel: SensorViewModel by activityViewModels<SensorViewModel>()
 
     override fun getViewBinding(): FragmentTemperatureBinding {
         return FragmentTemperatureBinding.inflate(layoutInflater)

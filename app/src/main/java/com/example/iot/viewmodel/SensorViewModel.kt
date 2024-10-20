@@ -68,10 +68,10 @@ class SensorViewModel : ViewModel() {
                 _listSensorResponseTable.emit(response)
             } catch (e: IOException) {
                 // Xử lý lỗi kết nối
-                Log.d("GiangPT IOE", e.toString())
+                Log.d("GiangPT all sensor data IOE", e.toString())
             } catch (e: HttpException) {
                 // Xử lý lỗi HTTP
-                Log.d("GiangPT HTTP", e.toString())
+                Log.d("GiangPT all sensor data HTTP", e.toString())
             }
         }
     }

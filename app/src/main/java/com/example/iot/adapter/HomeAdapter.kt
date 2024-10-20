@@ -3,9 +3,9 @@ package com.example.iot.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.iot.ui.fragment.home.BrightnessFragment
-import com.example.iot.ui.fragment.home.HumidityFragment
-import com.example.iot.ui.fragment.home.TemperatureFragment
+import com.example.iot.ui.fragment.home.brightness.BrightnessFragment
+import com.example.iot.ui.fragment.home.humidity.HumidityFragment
+import com.example.iot.ui.fragment.home.temperature.TemperatureFragment
 
 class HomeAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
 

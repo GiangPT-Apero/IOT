@@ -1,6 +1,7 @@
 package com.example.iot.ui.fragment
 
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,9 +20,8 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment_chart
 
     private val tableAdapter = TableAdapter()
 
-    private val deviceViewModel: DeviceViewModel by viewModels()
-
-    private val sensorViewModel: SensorViewModel by viewModels()
+    private val sensorViewModel: SensorViewModel by activityViewModels<SensorViewModel>()
+    private val ledViewModel: DeviceViewModel by activityViewModels<DeviceViewModel>()
 
     override fun getViewBinding(): FragmentChartBinding {
         return FragmentChartBinding.inflate(layoutInflater)
@@ -44,7 +44,7 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment_chart
 
     override fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
-            deviceViewModel.listDeviceResponse.filterNotNull().collect { listDeviceResponse ->
+            ledViewModel.listDeviceResponse.filterNotNull().collect { listDeviceResponse ->
                 tableAdapter.setListDevice(ArrayList(listDeviceResponse.content))
             }
         }
