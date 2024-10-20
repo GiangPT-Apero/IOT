@@ -30,7 +30,7 @@ class DeviceViewModel: ViewModel() {
                 Log.d("GiangPT IOE", e.toString())
             } catch (e: HttpException) {
                 // Xử lý lỗi HTTP
-                Log.d("GiangPT HTTP", e.toString())
+                Log.d("GiangPT 1 HTTP", e.toString())
             }
         }
     }

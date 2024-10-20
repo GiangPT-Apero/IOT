@@ -87,7 +87,7 @@ class SensorViewModel : ViewModel() {
             Log.d("GiangPT IOE", e.toString())
         } catch (e: HttpException) {
             // Xử lý lỗi HTTP
-            Log.d("GiangPT HTTP", e.toString())
+            Log.d("GiangPT 3 HTTP", e.toString())
         }
     }
 
