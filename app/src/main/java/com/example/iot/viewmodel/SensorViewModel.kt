@@ -57,6 +57,12 @@ class SensorViewModel : ViewModel() {
         }
     }
 
+    fun navigatePage(isNext: Boolean) {
+        if (pageIndex + 1 == _listSensorResponseTable.value?.totalPages) return
+        pageIndex = if (isNext) pageIndex + 1 else pageIndex - 1
+        fetchSensorData()
+    }
+
     init {
         startUpdateRunnable()
     }

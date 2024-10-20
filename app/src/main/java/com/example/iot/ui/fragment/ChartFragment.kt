@@ -11,6 +11,7 @@ import com.example.iot.databinding.FragmentChartBinding
 import com.example.iot.databinding.TopBarDeviceTableBinding
 import com.example.iot.databinding.TopBarSensorTableBinding
 import com.example.iot.ui.base.BaseFragment
+import com.example.iot.ui.fragment.dialog.LoadingDialog
 import com.example.iot.viewmodel.DeviceViewModel
 import com.example.iot.viewmodel.SensorViewModel
 import kotlinx.coroutines.flow.filterNotNull
@@ -19,6 +20,7 @@ import kotlinx.coroutines.launch
 class ChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment_chart) {
 
     private val tableAdapter = TableAdapter()
+    private val loadingDialog = LoadingDialog()
 
     private val sensorViewModel: SensorViewModel by activityViewModels<SensorViewModel>()
     private val ledViewModel: DeviceViewModel by activityViewModels<DeviceViewModel>()
@@ -28,17 +30,37 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment_chart
     }
 
     override fun initView() {
-        binding.txtSensor.setOnClickListener {
-            changeTable(isDevice = false)
-            tableAdapter.setTypeToDevice(isDevice = false)
-        }
-        binding.txtDevice.setOnClickListener {
-            changeTable(isDevice = true)
-            tableAdapter.setTypeToDevice(isDevice = true)
-        }
-        binding.rvChart.apply {
-            adapter = tableAdapter
-            layoutManager = LinearLayoutManager(requireContext())
+        with(binding) {
+            txtSensor.setOnClickListener {
+                changeTable(isDevice = false)
+                tableAdapter.setTypeToDevice(isDevice = false)
+            }
+            txtDevice.setOnClickListener {
+                changeTable(isDevice = true)
+                tableAdapter.setTypeToDevice(isDevice = true)
+            }
+            rvChart.apply {
+                adapter = tableAdapter
+                layoutManager = LinearLayoutManager(requireContext())
+            }
+
+            imgNext.setOnClickListener {
+                if (tableAdapter.isDeviceType()) {
+                    ledViewModel.navigatePage(true)
+                } else {
+                    sensorViewModel.navigatePage(true)
+                }
+                loadingDialog.show(childFragmentManager , "")
+            }
+
+            imgPrevious.setOnClickListener {
+                if (tableAdapter.isDeviceType()) {
+                    ledViewModel.navigatePage(false)
+                } else {
+                    sensorViewModel.navigatePage(false)
+                }
+                loadingDialog.show(childFragmentManager , "")
+            }
         }
     }
 
@@ -46,12 +68,20 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment_chart
         viewLifecycleOwner.lifecycleScope.launch {
             ledViewModel.listDeviceResponse.filterNotNull().collect { listDeviceResponse ->
                 tableAdapter.setListDevice(ArrayList(listDeviceResponse.content))
+                binding.txtPage.text = "${listDeviceResponse.number + 1}/${listDeviceResponse.totalPages}"
+                if (loadingDialog.isAdded) {
+                    loadingDialog.dismiss()
+                }
             }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             sensorViewModel.listSensorResponseTable.filterNotNull().collect { listSensorResponseTable ->
                 tableAdapter.setListSensor(ArrayList(listSensorResponseTable.content))
+                binding.txtPage.text = "${listSensorResponseTable.number + 1}/${listSensorResponseTable.totalPages}"
+                if (loadingDialog.isAdded) {
+                    loadingDialog.dismiss()
+                }
             }
         }
     }

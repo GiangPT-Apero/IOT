@@ -20,6 +20,12 @@ class DeviceViewModel: ViewModel() {
     var itemPerPage = 20
     var pageIndex = 0
 
+    fun navigatePage(isNext: Boolean) {
+        if (pageIndex + 1 == _listDeviceResponse.value?.totalPages) return
+        pageIndex = if (isNext) pageIndex + 1 else pageIndex - 1
+        fetchLedData()
+    }
+
     fun fetchLedData() {
         viewModelScope.launch(Dispatchers.IO) {
             try {

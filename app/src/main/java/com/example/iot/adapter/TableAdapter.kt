@@ -16,8 +16,6 @@ class TableAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var currentType = SENSOR_TYPE
     private var listSensor = ArrayList<SensorData>()
     private var listDevice = ArrayList<LedData>()
-    private var itemPerPage = 10
-    private var currentPage = 1
 
     fun setListSensor(listSensor: ArrayList<SensorData>) {
         this.listSensor = listSensor
@@ -34,6 +32,10 @@ class TableAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             SENSOR_TYPE
         }
         notifyDataSetChanged()
+    }
+
+    fun isDeviceType(): Boolean {
+        return currentType == DEVICE_TYPE
     }
 
     override fun getItemViewType(position: Int): Int {
