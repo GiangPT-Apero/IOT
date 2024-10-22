@@ -32,15 +32,15 @@ class ControlFragment : BaseFragment<FragmentControlBinding>(R.layout.fragment_c
     }
 
     override fun initView() {
-        binding.btnLight.setOnClickListener {
+        binding.loLight.setOnClickListener {
             loadingDialog.show(childFragmentManager , "")
             controlViewModel.toggleLed("led1")
         }
-        binding.btnFan.setOnClickListener {
+        binding.loFan.setOnClickListener {
             loadingDialog.show(childFragmentManager , "")
             controlViewModel.toggleLed("led2")
         }
-        binding.btnAC.setOnClickListener {
+        binding.loAC.setOnClickListener {
             loadingDialog.show(childFragmentManager , "")
             controlViewModel.toggleLed("led3")
         }

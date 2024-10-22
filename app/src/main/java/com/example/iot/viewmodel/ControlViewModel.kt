@@ -28,7 +28,7 @@ class ControlViewModel: ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             while (true) {
                 getStateLed()
-                delay(3000)
+                delay(2000)
             }
         }
     }

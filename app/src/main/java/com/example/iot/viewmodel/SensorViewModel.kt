@@ -58,7 +58,8 @@ class SensorViewModel : ViewModel() {
     }
 
     fun navigatePage(isNext: Boolean) {
-        if (pageIndex + 1 == _listSensorResponseTable.value?.totalPages) return
+        if (isNext && pageIndex + 1 == _listSensorResponseTable.value?.totalPages) return
+        if (!isNext && pageIndex - 1 < 0) return
         pageIndex = if (isNext) pageIndex + 1 else pageIndex - 1
         fetchSensorData()
     }
@@ -71,7 +72,9 @@ class SensorViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = RetrofitInstance.sensorApi.getAllData(pageIndex, itemPerPage)
-                _listSensorResponseTable.emit(response)
+                if (_listSensorResponseTable.value != response) {
+                    _listSensorResponseTable.emit(response)
+                }
             } catch (e: IOException) {
                 // Xử lý lỗi kết nối
                 Log.d("GiangPT all sensor data IOE", e.toString())

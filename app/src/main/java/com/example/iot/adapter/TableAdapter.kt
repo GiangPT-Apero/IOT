@@ -19,10 +19,12 @@ class TableAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun setListSensor(listSensor: ArrayList<SensorData>) {
         this.listSensor = listSensor
+        if (currentType == SENSOR_TYPE) notifyDataSetChanged()
     }
 
     fun setListDevice(listDevice: ArrayList<LedData>) {
         this.listDevice = listDevice
+        if (currentType == DEVICE_TYPE) notifyDataSetChanged()
     }
 
     fun setTypeToDevice(isDevice: Boolean) {
@@ -31,7 +33,6 @@ class TableAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         } else {
             SENSOR_TYPE
         }
-        notifyDataSetChanged()
     }
 
     fun isDeviceType(): Boolean {

@@ -21,7 +21,8 @@ class DeviceViewModel: ViewModel() {
     var pageIndex = 0
 
     fun navigatePage(isNext: Boolean) {
-        if (pageIndex + 1 == _listDeviceResponse.value?.totalPages) return
+        if (isNext && pageIndex + 1 == _listDeviceResponse.value?.totalPages) return
+        if (!isNext && pageIndex - 1 < 0) return
         pageIndex = if (isNext) pageIndex + 1 else pageIndex - 1
         fetchLedData()
     }
@@ -29,8 +30,11 @@ class DeviceViewModel: ViewModel() {
     fun fetchLedData() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
+                Log.d("GiangPT", "fetch led data $pageIndex - $itemPerPage")
                 val response = RetrofitInstance.ledApi.getAllData(pageIndex, itemPerPage)
-                _listDeviceResponse.emit(response)
+                if (_listDeviceResponse.value != response) {
+                    _listDeviceResponse.emit(response)
+                }
             } catch (e: IOException) {
                 // Xử lý lỗi kết nối
                 Log.d("GiangPT IOE", e.toString())

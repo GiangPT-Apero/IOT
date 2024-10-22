@@ -1,5 +1,6 @@
 package com.example.iot.ui.fragment
 
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -34,10 +35,16 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment_chart
             txtSensor.setOnClickListener {
                 changeTable(isDevice = false)
                 tableAdapter.setTypeToDevice(isDevice = false)
+                sensorViewModel.fetchSensorData()
+                binding.txtPage.text = "${sensorViewModel.listSensorResponseTable.value?.number?: 0 + 1}/${sensorViewModel.listSensorResponseTable.value?.totalPages}"
+                loadingDialog.show(childFragmentManager, "")
             }
             txtDevice.setOnClickListener {
                 changeTable(isDevice = true)
                 tableAdapter.setTypeToDevice(isDevice = true)
+                ledViewModel.fetchLedData()
+                binding.txtPage.text = "${ledViewModel.listDeviceResponse.value?.number?: 0 + 1}/${ledViewModel.listDeviceResponse.value?.totalPages}"
+                loadingDialog.show(childFragmentManager, "")
             }
             rvChart.apply {
                 adapter = tableAdapter
@@ -67,6 +74,7 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment_chart
     override fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
             ledViewModel.listDeviceResponse.filterNotNull().collect { listDeviceResponse ->
+                Log.d("GiangPT led", "${listDeviceResponse.number} - ${listDeviceResponse.totalPages}")
                 tableAdapter.setListDevice(ArrayList(listDeviceResponse.content))
                 binding.txtPage.text = "${listDeviceResponse.number + 1}/${listDeviceResponse.totalPages}"
                 if (loadingDialog.isAdded) {
@@ -77,6 +85,7 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment_chart
 
         viewLifecycleOwner.lifecycleScope.launch {
             sensorViewModel.listSensorResponseTable.filterNotNull().collect { listSensorResponseTable ->
+                Log.d("GiangPT sensor", "${listSensorResponseTable.number} - ${listSensorResponseTable.totalPages}")
                 tableAdapter.setListSensor(ArrayList(listSensorResponseTable.content))
                 binding.txtPage.text = "${listSensorResponseTable.number + 1}/${listSensorResponseTable.totalPages}"
                 if (loadingDialog.isAdded) {
