@@ -15,28 +15,33 @@ interface SensorDataApi {
     suspend fun getByTemperature(
         @Path("temperature") temperature: Float,
         @Query("page") page: Int = 0,
-        @Query("size") size: Int = 20
+        @Query("size") size: Int = 20,
+        @Query("sort") sort: Int = 1,
     ): PageResponse<SensorData>
 
     @GET("/sensor-data/humidity/{humidity}")
     suspend fun getByHumidity(
         @Path("humidity") humidity: Float,
         @Query("page") page: Int = 0,
-        @Query("size") size: Int = 20
+        @Query("size") size: Int = 20,
+        @Query("sort") sort: Int = 1,
     ): PageResponse<SensorData>
 
     @GET("/sensor-data/light/{light}")
     suspend fun getByLight(
         @Path("light") light: Float,
         @Query("page") page: Int = 0,
-        @Query("size") size: Int = 20
+        @Query("size") size: Int = 20,
+        @Query("sort") sort: Int = 1,
     ): PageResponse<SensorData>
 
     @GET("/sensor-data/all")
     suspend fun getAllData(
         @Query("page") page: Int = 0,
-        @Query("size") size: Int = 20
+        @Query("size") size: Int = 20,
+        @Query("sort") sort: Int = 1,
     ): PageResponse<SensorData>
+
 }
 
 

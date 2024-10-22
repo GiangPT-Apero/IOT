@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.iot.model.PageResponse
 import com.example.iot.model.SensorData
+import com.example.iot.model.TypeSearchSensor
 import com.example.iot.retrofit.RetrofitInstance
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineDataSet
@@ -57,21 +58,45 @@ class SensorViewModel : ViewModel() {
         }
     }
 
-    fun navigatePage(isNext: Boolean) {
+    fun navigatePage(isNext: Boolean, sort: Int) {
         if (isNext && pageIndex + 1 == _listSensorResponseTable.value?.totalPages) return
         if (!isNext && pageIndex - 1 < 0) return
         pageIndex = if (isNext) pageIndex + 1 else pageIndex - 1
-        fetchSensorData()
+        fetchSensorData(sort)
     }
 
     init {
         startUpdateRunnable()
     }
 
-    fun fetchSensorData() {
+    fun search(type: TypeSearchSensor, request: String, sort: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response = RetrofitInstance.sensorApi.getAllData(pageIndex, itemPerPage)
+                var param = request.toFloatOrNull()
+                if (param == null) param = 0f
+                val response = when (type) {
+                    TypeSearchSensor.TEMP -> RetrofitInstance.sensorApi.getByTemperature(param,  sort = sort)
+                    TypeSearchSensor.HUM -> RetrofitInstance.sensorApi.getByHumidity(param,  sort = sort)
+                    TypeSearchSensor.LIGHT -> RetrofitInstance.sensorApi.getByLight(param, sort = sort)
+                    else -> RetrofitInstance.sensorApi.getAllData(pageIndex, itemPerPage,  sort = sort)
+                }
+                if (_listSensorResponseTable.value != response) {
+                    _listSensorResponseTable.emit(response)
+                }
+            } catch (e: IOException) {
+                // Xử lý lỗi kết nối
+                Log.d("GiangPT all sensor data IOE", e.toString())
+            } catch (e: HttpException) {
+                // Xử lý lỗi HTTP
+                Log.d("GiangPT all sensor data HTTP", e.toString())
+            }
+        }
+    }
+
+    fun fetchSensorData(sort: Int = 1) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val response = RetrofitInstance.sensorApi.getAllData(pageIndex, itemPerPage,  sort = sort)
                 if (_listSensorResponseTable.value != response) {
                     _listSensorResponseTable.emit(response)
                 }
@@ -93,7 +118,7 @@ class SensorViewModel : ViewModel() {
             }
         } catch (e: IOException) {
             // Xử lý lỗi kết nối
-            Log.d("GiangPT IOE", e.toString())
+            //Log.d("GiangPT newest IOE", e.toString())
         } catch (e: HttpException) {
             // Xử lý lỗi HTTP
             Log.d("GiangPT 3 HTTP", e.toString())

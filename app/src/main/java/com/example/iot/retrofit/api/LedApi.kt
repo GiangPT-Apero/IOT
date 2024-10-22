@@ -21,9 +21,26 @@ interface LedApi {
     @GET("/led/data")
     suspend fun getAllData(
         @Query("page") page: Int = 0,
-        @Query("size") size: Int = 20
+        @Query("size") size: Int = 20,
+        @Query("sort") sort: Int = 1,
     ): PageResponse<LedData>
 
     @GET("/led/state")
     suspend fun getLedState(): LedState
+
+    @GET("/led/ledName/{ledName}")
+    suspend fun getByLedName(
+        @Path("ledName") ledName: String,
+        @Query("page") page: Int = 0,
+        @Query("size") size: Int = 20,
+        @Query("sort") sort: Int = 1,
+    ): PageResponse<LedData>
+
+    @GET("/led/action/{action}")
+    suspend fun getByAction(
+        @Path("action") action: String,
+        @Query("page") page: Int = 0,
+        @Query("size") size: Int = 20,
+        @Query("sort") sort: Int = 1,
+    ): PageResponse<LedData>
 }

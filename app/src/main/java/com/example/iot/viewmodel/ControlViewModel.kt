@@ -41,7 +41,7 @@ class ControlViewModel: ViewModel() {
             }
         } catch (e: IOException) {
             // Xử lý lỗi kết nối
-            Log.d("GiangPT IOE", e.toString())
+            //Log.d("GiangPT IOE", e.toString())
         } catch (e: HttpException) {
             // Xử lý lỗi HTTP
             Log.d("GiangPT 2 HTTP", e.toString())

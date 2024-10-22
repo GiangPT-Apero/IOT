@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?><!-- res/layout/popup_layout.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/dark_464646"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/_2sdp">
+
+    <TextView
+        android:id="@+id/popupText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:paddingEnd="@dimen/_20sdp"
+        android:text="Search by:"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtPopupTemp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_search_by"
+        android:padding="@dimen/_8sdp"
+        android:text="Tempature"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtPopupHum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_search_by"
+        android:padding="@dimen/_8sdp"
+        android:text="Humidity"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtPopupLight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_search_by"
+        android:padding="@dimen/_8sdp"
+        android:text="Light"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+</LinearLayout>
