@@ -2,6 +2,7 @@ package com.example.iot.ui.fragment
 
 import android.annotation.SuppressLint
 import android.content.Context.LAYOUT_INFLATER_SERVICE
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -41,6 +42,7 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment_chart
 
     override fun getViewBinding(): FragmentChartBinding {
         return FragmentChartBinding.inflate(layoutInflater)
+
     }
 
     override fun initView() {

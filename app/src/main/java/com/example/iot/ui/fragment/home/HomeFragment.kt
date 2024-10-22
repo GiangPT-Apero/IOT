@@ -95,8 +95,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     private fun fetchData() {
-        sensorViewModel.fetchSensorData()
-        ledViewModel.fetchLedData()
+        /*sensorViewModel.fetchSensorData()
+        ledViewModel.fetchLedData()*/
     }
 
     override fun onDestroyView() {
