@@ -58,8 +58,13 @@ class MainActivity : AppCompatActivity() {
                         true
                     }
 
-                    R.id.action_chart -> {
-                        navController.navigate(R.id.chartFragment)
+                    R.id.action_sensor_chart -> {
+                        navController.navigate(R.id.sensorChartFragment)
+                        true
+                    }
+
+                    R.id.action_led_chart -> {
+                        navController.navigate(R.id.ledChartFragment)
                         true
                     }
 

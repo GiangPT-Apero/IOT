@@ -25,4 +25,16 @@
         android:name="com.example.iot.ui.fragment.UserFragment"
         android:label="fragment_user"
         tools:layout="@layout/fragment_user" />
+    <fragment
+        android:id="@+id/sensorChartFragment"
+        android:name="com.example.iot.ui.fragment.SensorChartFragment"
+        android:label="SensorChartFragment" />
+    <fragment
+        android:id="@+id/temperatureFragment"
+        android:name="com.example.iot.ui.fragment.home.temperature.TemperatureFragment"
+        android:label="TemperatureFragment" />
+    <fragment
+        android:id="@+id/ledChartFragment"
+        android:name="com.example.iot.ui.fragment.LedChartFragment"
+        android:label="LedChartFragment" />
 </navigation>

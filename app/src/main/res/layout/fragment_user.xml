@@ -42,38 +42,54 @@
         android:textColor="@color/dark_464646"
         android:text="B21DCCN307" />
 
-<!--    <TextView
+    <TextView
+        android:id="@+id/txtGitApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
+        android:autoLink="none"
+        android:linksClickable="true"
         android:fontFamily="@font/noto_sans"
+        android:padding="@dimen/_10sdp"
         android:textColor="@color/dark_464646"
-        android:text="Ten" />-->
+        android:text="Github app" />
 
     <TextView
+        android:id="@+id/txtGitServer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
+        android:padding="@dimen/_10sdp"
+        android:autoLink="none"
+        android:linksClickable="true"
         android:fontFamily="@font/noto_sans"
         android:textColor="@color/dark_464646"
-        android:text="Github" />
+        android:text="Github server" />
 
     <TextView
+        android:id="@+id/txtReport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
+        android:padding="@dimen/_10sdp"
+        android:autoLink="web"
+        android:linksClickable="true"
         android:fontFamily="@font/noto_sans"
         android:textColor="@color/dark_464646"
         android:text="Báo cáo" />
 
     <TextView
+        android:id="@+id/txtApi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
+        android:padding="@dimen/_10sdp"
+        android:autoLink="web"
+        android:linksClickable="true"
         android:fontFamily="@font/noto_sans"
         android:textColor="@color/dark_464646"
         android:text="API Doc" />

@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.iot.model.LedData
 import com.example.iot.model.PageResponse
 import com.example.iot.model.TypeSearchLed
-import com.example.iot.model.TypeSearchSensor
 import com.example.iot.retrofit.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,10 +31,12 @@ class DeviceViewModel: ViewModel() {
     fun search(type: TypeSearchLed, request: String, sort: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val param = request
                 val response = when (type) {
-                    TypeSearchLed.NAME -> RetrofitInstance.ledApi.getByLedName(param, sort = sort)
-                    TypeSearchLed.ACTION -> RetrofitInstance.ledApi.getByAction(param, sort = sort)
+                    TypeSearchLed.NAME -> RetrofitInstance.ledApi.getByLedName(request, sort = sort)
+                    TypeSearchLed.ACTION -> RetrofitInstance.ledApi.getByAction(
+                        request,
+                        sort = sort
+                    )
                     else -> RetrofitInstance.ledApi.getAllData(pageIndex, itemPerPage, sort = sort)
                 }
                 if (_listDeviceResponse.value != response) {

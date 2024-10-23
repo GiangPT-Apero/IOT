@@ -32,7 +32,7 @@ interface LedApi {
     suspend fun getByLedName(
         @Path("ledName") ledName: String,
         @Query("page") page: Int = 0,
-        @Query("size") size: Int = 20,
+        @Query("size") size: Int = 20000,
         @Query("sort") sort: Int = 1,
     ): PageResponse<LedData>
 
@@ -40,7 +40,7 @@ interface LedApi {
     suspend fun getByAction(
         @Path("action") action: String,
         @Query("page") page: Int = 0,
-        @Query("size") size: Int = 20,
+        @Query("size") size: Int = 20000,
         @Query("sort") sort: Int = 1,
     ): PageResponse<LedData>
 }

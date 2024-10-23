@@ -9,7 +9,11 @@
         android:icon="@drawable/ic_control"
         android:title="" />
     <item
-        android:id="@+id/action_chart"
+        android:id="@+id/action_sensor_chart"
+        android:icon="@drawable/ic_chart"
+        android:title="" />
+    <item
+        android:id="@+id/action_led_chart"
         android:icon="@drawable/ic_chart"
         android:title="" />
     <item
