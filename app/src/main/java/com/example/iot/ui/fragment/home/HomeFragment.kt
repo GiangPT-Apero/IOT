@@ -25,17 +25,40 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     override fun initView() {
         fetchData()
-
-        binding.viewPager.adapter = HomeAdapter(requireActivity())
-        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            when (position) {
-                0 -> tab.text = "Temperature"
-                1 -> tab.text = "Humidity"
-                2 -> tab.text = "Brightness"
-            }
-        }.attach()
-
+        observeData()
         setupChart()
+    }
+
+    private fun observeData() {
+        sensorViewModel.newestSensorResponse.observe(viewLifecycleOwner) {
+            binding.txtTemperature.text = it.temperature.toString() + "°C"
+            if (it.temperature <= 18) {
+                binding.imgTemperature.setImageResource(R.drawable.temp_1)
+            } else if (it.temperature <= 28) {
+                binding.imgTemperature.setImageResource(R.drawable.temp_2)
+            } else if (it.temperature <= 35){
+                binding.imgTemperature.setImageResource(R.drawable.temp_3)
+            } else {
+                binding.imgTemperature.setImageResource(R.drawable.temp_4)
+            }
+
+            binding.txtHumidity.text = it.humidity.toString() + " %"
+            if (it.humidity > 50) {
+                binding.imgHumidity.setImageResource(R.drawable.hum_2)
+            } else {
+                binding.imgHumidity.setImageResource(R.drawable.hum_1)
+            }
+
+            binding.txtBrightness.text = it.light.toString() + " Lx"
+            if (it.light < 400) {
+                binding.imgBrightness.setImageResource(R.drawable.bright_3)
+            } else if (it.light < 700) {
+                binding.imgBrightness.setImageResource(R.drawable.bright_2)
+            } else {
+                binding.imgBrightness.setImageResource(R.drawable.bright_1)
+            }
+        }
+
     }
 
     override fun observeViewModel() {

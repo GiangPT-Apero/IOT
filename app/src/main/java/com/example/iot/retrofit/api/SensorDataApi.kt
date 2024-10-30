@@ -5,6 +5,7 @@ import com.example.iot.model.SensorData
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.sql.Timestamp
 
 interface SensorDataApi {
 
@@ -35,11 +36,20 @@ interface SensorDataApi {
         @Query("sort") sort: Int = 1,
     ): PageResponse<SensorData>
 
+    @GET("/sensor-data/time")
+    suspend fun getByTimeStamp(
+        @Query("timestamp") timestamp: String,
+        @Query("page") page: Int = 0,
+        @Query("size") size: Int = 20000,
+        @Query("sort") sort: Int = 1,
+    ) : PageResponse<SensorData>
+
     @GET("/sensor-data/all")
     suspend fun getAllData(
         @Query("page") page: Int = 0,
         @Query("size") size: Int = 20,
         @Query("sort") sort: Int = 1,
+        @Query("params") params: String = "id",
     ): PageResponse<SensorData>
 
 }

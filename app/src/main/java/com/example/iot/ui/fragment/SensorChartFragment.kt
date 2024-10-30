@@ -16,6 +16,7 @@ import com.example.iot.R
 import com.example.iot.adapter.TableAdapter
 import com.example.iot.databinding.FragmentChartBinding
 import com.example.iot.databinding.TopBarSensorTableBinding
+import com.example.iot.model.TypeSearchLed
 import com.example.iot.model.TypeSearchSensor
 import com.example.iot.ui.base.BaseFragment
 import com.example.iot.ui.fragment.dialog.LoadingDialog
@@ -68,6 +69,7 @@ class SensorChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment
             Log.d("GiangPT", "click sensor")
             sensorViewModel.pageIndex = 0
             sensorViewModel.fetchSensorData(sortType)
+            typeSearchSensor = TypeSearchSensor.ALL
             loadingDialog.show(childFragmentManager, "")
         }
         binding.imgSort.setOnClickListener { showPopupSensor(binding.imgSort) }
@@ -84,9 +86,13 @@ class SensorChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment
             if (sortType == 1) {
                 sortType = 0
                 binding.imgUpDown.setImageResource(R.drawable.ic_sort_down)
+                sensorViewModel.sortByType(typeSearchSensor, sortType)
+                loadingDialog.show(childFragmentManager , "")
             } else {
                 sortType = 1
                 binding.imgUpDown.setImageResource(R.drawable.ic_sort_up)
+                sensorViewModel.sortByType(typeSearchSensor, sortType)
+                loadingDialog.show(childFragmentManager , "")
             }
         }
     }
@@ -123,6 +129,7 @@ class SensorChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment
         val txtTemp = popupView.findViewById<TextView>(R.id.txtPopupTemp)
         val txtHum = popupView.findViewById<TextView>(R.id.txtPopupHum)
         val txtLight = popupView.findViewById<TextView>(R.id.txtPopupLight)
+        val txtTime = popupView.findViewById<TextView>(R.id.txtPopupTime)
 
         txtTemp.setOnClickListener {
             typeSearchSensor = TypeSearchSensor.TEMP
@@ -134,6 +141,10 @@ class SensorChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment
         }
         txtLight.setOnClickListener {
             typeSearchSensor = TypeSearchSensor.LIGHT
+            popupWindow.dismiss()
+        }
+        txtTime.setOnClickListener {
+            typeSearchSensor = TypeSearchSensor.TIME
             popupWindow.dismiss()
         }
     }

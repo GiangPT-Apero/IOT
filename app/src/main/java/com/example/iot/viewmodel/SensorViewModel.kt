@@ -78,8 +78,33 @@ class SensorViewModel : ViewModel() {
                     TypeSearchSensor.TEMP -> RetrofitInstance.sensorApi.getByTemperature(param,  sort = sort)
                     TypeSearchSensor.HUM -> RetrofitInstance.sensorApi.getByHumidity(param,  sort = sort)
                     TypeSearchSensor.LIGHT -> RetrofitInstance.sensorApi.getByLight(param, sort = sort)
+                    TypeSearchSensor.TIME -> RetrofitInstance.sensorApi.getByTimeStamp(request, sort = sort)
                     else -> RetrofitInstance.sensorApi.getAllData(pageIndex, itemPerPage,  sort = sort)
                 }
+                if (_listSensorResponseTable.value != response) {
+                    _listSensorResponseTable.emit(response)
+                }
+            } catch (e: IOException) {
+                // Xử lý lỗi kết nối
+                Log.d("GiangPT all sensor data IOE", e.toString())
+            } catch (e: HttpException) {
+                // Xử lý lỗi HTTP
+                Log.d("GiangPT all sensor data HTTP", e.toString())
+            }
+        }
+    }
+
+    fun sortByType(type: TypeSearchSensor, sort: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val params = when (type) {
+                    TypeSearchSensor.TEMP -> "temperature"
+                    TypeSearchSensor.HUM -> "humidity"
+                    TypeSearchSensor.LIGHT -> "light"
+                    TypeSearchSensor.TIME -> "timestamp"
+                    else -> "id"
+                }
+                val response = RetrofitInstance.sensorApi.getAllData(pageIndex, itemPerPage,  sort = sort, params)
                 if (_listSensorResponseTable.value != response) {
                     _listSensorResponseTable.emit(response)
                 }

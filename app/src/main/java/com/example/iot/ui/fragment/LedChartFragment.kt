@@ -17,6 +17,7 @@ import com.example.iot.adapter.TableAdapter
 import com.example.iot.databinding.FragmentChartBinding
 import com.example.iot.databinding.TopBarDeviceTableBinding
 import com.example.iot.model.TypeSearchLed
+import com.example.iot.model.TypeSearchSensor
 import com.example.iot.ui.base.BaseFragment
 import com.example.iot.ui.fragment.dialog.LoadingDialog
 import com.example.iot.viewmodel.DeviceViewModel
@@ -68,6 +69,7 @@ class LedChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment_ch
         binding.txtDevice.setOnClickListener {
             Log.d("GiangPT", "click led")
             ledViewModel.pageIndex = 0
+            typeSearchLed = TypeSearchLed.ALL
             ledViewModel.fetchLedData(sortType)
             loadingDialog.show(childFragmentManager, "")
         }
@@ -85,9 +87,13 @@ class LedChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment_ch
             if (sortType == 1) {
                 sortType = 0
                 binding.imgUpDown.setImageResource(R.drawable.ic_sort_down)
+                ledViewModel.sortByType(typeSearchLed, sortType)
+                loadingDialog.show(childFragmentManager , "")
             } else {
                 sortType = 1
                 binding.imgUpDown.setImageResource(R.drawable.ic_sort_up)
+                ledViewModel.sortByType(typeSearchLed, sortType)
+                loadingDialog.show(childFragmentManager , "")
             }
         }
     }
@@ -123,6 +129,7 @@ class LedChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment_ch
 
         val txtName = popupView.findViewById<TextView>(R.id.txtPopupName)
         val txtAction = popupView.findViewById<TextView>(R.id.txtPopupAction)
+        val txtTime = popupView.findViewById<TextView>(R.id.txtPopupTimeLed)
 
         txtName.setOnClickListener {
             typeSearchLed = TypeSearchLed.NAME
@@ -130,6 +137,10 @@ class LedChartFragment : BaseFragment<FragmentChartBinding>(R.layout.fragment_ch
         }
         txtAction.setOnClickListener {
             typeSearchLed = TypeSearchLed.ACTION
+            popupWindow.dismiss()
+        }
+        txtTime.setOnClickListener {
+            typeSearchLed = TypeSearchLed.TIME
             popupWindow.dismiss()
         }
     }

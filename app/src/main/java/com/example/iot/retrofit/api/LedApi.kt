@@ -43,4 +43,12 @@ interface LedApi {
         @Query("size") size: Int = 20000,
         @Query("sort") sort: Int = 1,
     ): PageResponse<LedData>
+
+    @GET("/led/time")
+    suspend fun getByTimeStamp(
+        @Query("timestamp") timestamp: String,
+        @Query("page") page: Int = 0,
+        @Query("size") size: Int = 20000,
+        @Query("sort") sort: Int = 1,
+    ): PageResponse<LedData>
 }

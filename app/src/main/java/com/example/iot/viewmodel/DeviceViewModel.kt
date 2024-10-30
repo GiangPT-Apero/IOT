@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.iot.model.LedData
 import com.example.iot.model.PageResponse
 import com.example.iot.model.TypeSearchLed
+import com.example.iot.model.TypeSearchSensor
 import com.example.iot.retrofit.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,8 +38,32 @@ class DeviceViewModel: ViewModel() {
                         request,
                         sort = sort
                     )
+                    TypeSearchLed.TIME -> RetrofitInstance.ledApi.getByTimeStamp(request, sort = sort)
                     else -> RetrofitInstance.ledApi.getAllData(pageIndex, itemPerPage, sort = sort)
                 }
+                if (_listDeviceResponse.value != response) {
+                    _listDeviceResponse.emit(response)
+                }
+            } catch (e: IOException) {
+                // Xử lý lỗi kết nối
+                Log.d("GiangPT all sensor data IOE", e.toString())
+            } catch (e: HttpException) {
+                // Xử lý lỗi HTTP
+                Log.d("GiangPT all sensor data HTTP", e.toString())
+            }
+        }
+    }
+
+    fun sortByType(type: TypeSearchLed, sort: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val params = when (type) {
+                    TypeSearchLed.ACTION -> "action"
+                    TypeSearchLed.NAME -> "led_name"
+                    TypeSearchLed.TIME -> "time_stamp"
+                    else -> "id"
+                }
+                val response = RetrofitInstance.ledApi.getAllData(pageIndex, itemPerPage,  sort = sort)
                 if (_listDeviceResponse.value != response) {
                     _listDeviceResponse.emit(response)
                 }

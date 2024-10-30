@@ -1,8 +1,12 @@
 package com.example.iot.adapter
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.iot.databinding.DeviceItemLayoutBinding
 import com.example.iot.databinding.SensorItemLayoutBinding
@@ -89,6 +93,15 @@ class TableAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             binding.txtHumidity.text = sensor.humidity.toString()
             binding.txtBrightness.text = sensor.light.toString()
             binding.txtTime.text = sensor.timestamp
+            binding.txtTime.setOnClickListener {
+                val textToCopy = binding.txtTime.text.toString()
+                val clipboard = it.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText("Copied Text", textToCopy)
+                clipboard.setPrimaryClip(clip)
+
+                // Hiển thị thông báo cho người dùng
+                Toast.makeText(it.context, "Text copied to clipboard", Toast.LENGTH_SHORT).show()
+            }
         }
 
     }
@@ -101,6 +114,15 @@ class TableAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             binding.txtName.text = device.ledName
             binding.txtAction.text = device.action.toString()
             binding.txtTime.text = device.timeStamp.toString()
+            binding.txtTime.setOnClickListener {
+                val textToCopy = binding.txtTime.text.toString()
+                val clipboard = it.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText("Copied Text", textToCopy)
+                clipboard.setPrimaryClip(clip)
+
+                // Hiển thị thông báo cho người dùng
+                Toast.makeText(it.context, "Text copied to clipboard", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

@@ -46,4 +46,14 @@
         android:textColor="@color/white"
         android:textSize="16sp" />
 
+    <TextView
+        android:id="@+id/txtPopupTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_search_by"
+        android:padding="@dimen/_8sdp"
+        android:text="Time"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
 </LinearLayout>

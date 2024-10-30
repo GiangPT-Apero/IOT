@@ -38,7 +38,7 @@ class LoadingDialog: DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launch {
-            delay(10000)
+            delay(15000)
             dismiss()
         }
     }
