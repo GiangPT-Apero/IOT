@@ -48,10 +48,15 @@ class MainActivity : AppCompatActivity() {
                         true
                     }
 
-                    R.id.action_user -> {
-                        navController.navigate(R.id.userFragment)
+                    R.id.action_random -> {
+                        navController.navigate(R.id.brightnessFragment)
                         true
                     }
+
+                    /*R.id.action_user -> {
+                        navController.navigate(R.id.userFragment)
+                        true
+                    }*/
 
                     R.id.action_control -> {
                         navController.navigate(R.id.controlFragment)

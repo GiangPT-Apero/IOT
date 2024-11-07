@@ -37,4 +37,9 @@
         android:id="@+id/ledChartFragment"
         android:name="com.example.iot.ui.fragment.LedChartFragment"
         android:label="LedChartFragment" />
+    <fragment
+        android:id="@+id/brightnessFragment"
+        android:name="com.example.iot.ui.fragment.home.brightness.BrightnessFragment"
+        android:label="BrightnessFragment"
+        tools:layout="@layout/fragment_brightness"/>
 </navigation>

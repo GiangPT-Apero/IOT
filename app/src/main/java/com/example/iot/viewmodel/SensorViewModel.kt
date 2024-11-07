@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.iot.model.PageResponse
+import com.example.iot.model.RandomData
 import com.example.iot.model.SensorData
 import com.example.iot.model.TypeSearchSensor
 import com.example.iot.retrofit.RetrofitInstance
@@ -25,6 +26,7 @@ class SensorViewModel : ViewModel() {
     }
 
     private var indexChart = 0
+    private var indexChartRandom = 0
     var itemPerPage = 20
     var pageIndex = 0
 
@@ -34,6 +36,15 @@ class SensorViewModel : ViewModel() {
     private val _newestSensorResponse = MutableLiveData<SensorData>()
     val newestSensorResponse: LiveData<SensorData>
         get() = _newestSensorResponse
+
+    private val _newestRandomResponse = MutableLiveData<RandomData>()
+    val newestRandomResponse: LiveData<RandomData>
+        get() = _newestRandomResponse
+
+    private val _randomDataSet =
+        MutableLiveData<LineDataSet?>(LineDataSet(mutableListOf(), "Random"))
+    val randomDataSet: LiveData<LineDataSet?>
+        get() = _randomDataSet
 
     private val _temperatureDataSet =
         MutableLiveData<LineDataSet?>(LineDataSet(mutableListOf(), "Temperature"))
@@ -138,9 +149,14 @@ class SensorViewModel : ViewModel() {
     private suspend fun getNewestSensorResponse() {
         try {
             val response = RetrofitInstance.sensorApi.getNewestData()
+            val randomData = RetrofitInstance.sensorApi.getNewestRandomData()
             if (_newestSensorResponse.value != response) {
                 updateNewestSensorResponse(response)
             }
+            if (_newestRandomResponse.value != randomData) {
+                updateRandomDataResponse(randomData)
+            }
+
         } catch (e: IOException) {
             // Xử lý lỗi kết nối
             //Log.d("GiangPT newest IOE", e.toString())
@@ -148,6 +164,24 @@ class SensorViewModel : ViewModel() {
             // Xử lý lỗi HTTP
             Log.d("GiangPT 3 HTTP", e.toString())
         }
+    }
+
+    private fun updateRandomDataResponse(response: RandomData) {
+         _newestRandomResponse.postValue(response)
+        val randomDataSet = _randomDataSet.value?.apply {
+            if (entryCount >= MAX_ENTRIES) {
+                removeFirst()
+            }
+            addEntry(
+                Entry(
+                    indexChartRandom.toFloat(),
+                    response.value.toFloat(),
+                )
+            )
+            notifyDataSetChanged()
+        }
+        indexChartRandom++
+        _randomDataSet.postValue(randomDataSet)
     }
 
     private fun updateNewestSensorResponse(response: SensorData) {

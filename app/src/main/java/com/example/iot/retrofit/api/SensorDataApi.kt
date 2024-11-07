@@ -1,6 +1,7 @@
 package com.example.iot.retrofit.api
 
 import com.example.iot.model.PageResponse
+import com.example.iot.model.RandomData
 import com.example.iot.model.SensorData
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -11,6 +12,9 @@ interface SensorDataApi {
 
     @GET("/sensor-data/newest")
     suspend fun getNewestData() : SensorData
+
+    @GET("/sensor-data/random/newest")
+    suspend fun getNewestRandomData() : RandomData
 
     @GET("/sensor-data/temperature/{temperature}")
     suspend fun getByTemperature(

@@ -3,6 +3,7 @@ package com.example.iot.ui.fragment.home
 import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.iot.R
 import com.example.iot.adapter.HomeAdapter
 import com.example.iot.databinding.FragmentHomeBinding
@@ -27,6 +28,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         fetchData()
         observeData()
         setupChart()
+        binding.cvAvatar.setOnClickListener {
+            findNavController().navigate(R.id.userFragment)
+        }
     }
 
     private fun observeData() {

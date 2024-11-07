@@ -5,6 +5,10 @@
         android:icon="@drawable/ic_home"
         android:title="" />
     <item
+        android:id="@+id/action_random"
+        android:icon="@drawable/ic_search"
+        android:title="" />
+    <item
         android:id="@+id/action_control"
         android:icon="@drawable/ic_control"
         android:title="" />
@@ -15,9 +19,5 @@
     <item
         android:id="@+id/action_led_chart"
         android:icon="@drawable/ic_chart"
-        android:title="" />
-    <item
-        android:id="@+id/action_user"
-        android:icon="@drawable/ic_user"
         android:title="" />
 </menu>

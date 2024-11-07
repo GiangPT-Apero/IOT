@@ -24,6 +24,7 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cvAvatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/_50sdp"
